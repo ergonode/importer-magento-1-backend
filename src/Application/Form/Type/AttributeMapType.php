@@ -11,33 +11,53 @@ namespace Ergonode\ImporterMagento1\Application\Form\Type;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Ergonode\Core\Application\Form\Type\LanguageType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Ergonode\ImporterMagento1\Application\Model\Type\LanguageMapModel;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Ergonode\Attribute\Domain\Query\AttributeQueryInterface;
+use Ergonode\ImporterMagento1\Application\Model\Type\AttributeMapModel;
 
 /**
  */
-class LanguageMapType extends AbstractType
+class AttributeMapType extends AbstractType
 {
+    /**
+     * @var AttributeQueryInterface
+     */
+    private AttributeQueryInterface $query;
+
+    /**
+     * AttributeMapType constructor.
+     *
+     * @param AttributeQueryInterface $query
+     */
+    public function __construct(AttributeQueryInterface $query)
+    {
+        $this->query = $query;
+    }
+
+
     /**
      * @param FormBuilderInterface $builder
      * @param array                $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
+        $dictionary = $this->query->getDictionary();
+
         $builder
             ->add(
-                'store',
+                'code',
                 TextType::class,
                 [
-                    'label' => 'Store view',
+                    'label' => 'Code',
                 ]
             )
             ->add(
-                'language',
-                LanguageType::class,
+                'attribute',
+                ChoiceType::class,
                 [
-                    'label' => 'Language',
+                    'label' => 'Attribute',
+                    'choices' => array_flip($dictionary),
                 ]
             );
     }
@@ -49,7 +69,7 @@ class LanguageMapType extends AbstractType
     {
         $resolver->setDefaults([
             'translation_domain' => 'import',
-            'data_class' => LanguageMapModel::class,
+            'data_class' => AttributeMapModel::class,
         ]);
     }
 }

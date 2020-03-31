@@ -9,26 +9,27 @@ declare(strict_types = 1);
 namespace Ergonode\ImporterMagento1\Infrastructure\Processor\Step;
 
 use Ergonode\EventSourcing\Infrastructure\Bus\CommandBusInterface;
+use Ergonode\Importer\Domain\Command\Import\ProcessImportCommand;
 use Ergonode\Importer\Domain\Entity\Import;
 use Ergonode\Importer\Domain\ValueObject\Progress;
 use Ergonode\ImporterMagento1\Domain\Entity\Magento1CsvSource;
 use Ergonode\ImporterMagento1\Infrastructure\Model\ProductModel;
 use Ergonode\ImporterMagento1\Infrastructure\Processor\Magento1ProcessorStepInterface;
-use Ergonode\Transformer\Domain\Entity\Transformer;
-use Ergonode\Importer\Domain\Command\Import\ProcessImportCommand;
 use Ergonode\Transformer\Domain\Model\Record;
+use Ergonode\Attribute\Domain\ValueObject\AttributeCode;
 use Ergonode\Value\Domain\ValueObject\StringValue;
-use Ergonode\Transformer\Infrastructure\Action\MultimediaImportAction;
+use Ergonode\Attribute\Domain\Entity\Attribute\SelectAttribute;
+use Ergonode\Attribute\Domain\Entity\Attribute\MultiSelectAttribute;
+use Ergonode\Transformer\Domain\Entity\Transformer;
 use Ergonode\Importer\Domain\Repository\ImportLineRepositoryInterface;
 use Ergonode\Importer\Domain\Entity\ImportLine;
-use Ramsey\Uuid\Uuid;
+use Doctrine\DBAL\DBALException;
+use Ergonode\Transformer\Infrastructure\Action\OptionImportAction;
 
 /**
  */
-class Magento1MultimediaProcessor implements Magento1ProcessorStepInterface
+class Magento1OptionProcessor implements Magento1ProcessorStepInterface
 {
-    private const NAMESPACE = 'e1f84ee9-14f2-4e52-981a-b6b82006ada8';
-
     /**
      * @var ImportLineRepositoryInterface
      */
@@ -56,7 +57,7 @@ class Magento1MultimediaProcessor implements Magento1ProcessorStepInterface
      * @param Magento1CsvSource $source
      * @param Progress          $steps
      *
-     * @throws \Exception
+     * @throws DBALException
      */
     public function process(
         Import $import,
@@ -65,22 +66,27 @@ class Magento1MultimediaProcessor implements Magento1ProcessorStepInterface
         Magento1CsvSource $source,
         Progress $steps
     ): void {
-        if (!$source->import(Magento1CsvSource::MULTIMEDIA)) {
-            return;
+        $result = [];
+        $columns = [];
+        foreach ($products as $product) {
+            foreach ($product->get('default') as $key => $item) {
+                if ('_' !== $key[0] && false === strpos($key, 'esa_')) {
+                    $columns[$key][] = $item;
+                }
+            }
         }
 
-        $result = [];
-        foreach ($products as $product) {
-            $default = $product->get('default');
-            if (array_key_exists('image', $default) && $default['image'] !== null) {
-                $images = explode(',', $default['image']);
-                foreach ($images as $image) {
-                    $url = sprintf('%s%s', $source->getHost(), $image);
-                    $uuid  = Uuid::uuid5(self::NAMESPACE, $url);
+        foreach ($transformer->getAttributes() as $field => $converter) {
+            $type = $transformer->getAttributeType($field);
+
+            if (SelectAttribute::TYPE === $type || MultiSelectAttribute::TYPE === $type) {
+                $attributeCode = new AttributeCode($field);
+                $options = $this->getOptions($columns[$field]);
+                foreach ($options as $key => $option) {
                     $record = new Record();
-                    $record->set('name', new StringValue($image));
-                    $record->set('id', new StringValue($uuid->toString()));
-                    $record->set('url', new StringValue(str_replace('//', '/', $url)));
+                    $record->set('attribute_code', new StringValue($attributeCode->getValue()));
+                    $record->set('option_code', new StringValue($key));
+                    $record->setValue($source->getDefaultLanguage()->getCode(), $option);
                     $result[] = $record;
                 }
             }
@@ -88,19 +94,37 @@ class Magento1MultimediaProcessor implements Magento1ProcessorStepInterface
 
         $i = 0;
         $count = count($result);
-        foreach ($result as $images => $image) {
+        foreach ($result as $attribute) {
             $i++;
             $records = new Progress($i, $count);
             $command = new ProcessImportCommand(
                 $import->getId(),
                 $steps,
                 $records,
-                $image,
-                MultimediaImportAction::TYPE
+                $attribute,
+                OptionImportAction::TYPE
             );
             $line = new ImportLine($import->getId(), $steps->getPosition(), $i);
             $this->repository->save($line);
             $this->commandBus->dispatch($command);
         }
+    }
+
+    /**
+     * @param array $column
+     *
+     * @return array
+     */
+    private function getOptions(array $column): array
+    {
+        $result = [];
+        $unique = array_unique($column);
+        foreach ($unique as $element) {
+            if ('' !== $element && null !== $element) {
+                $result[$element] = new StringValue($element);
+            }
+        }
+
+        return $result;
     }
 }
