@@ -4,5 +4,5 @@ parameters:
         - src
         - tests
     excludes_analyse:
-            - 'src/Infrastructure/Processor/StartMagento1ImportProcess.php'
-            - 'src/Infrastructure/Reader/Magento1CsvReader.php'
+        - 'src/Infrastructure/Processor/StartMagento1ImportProcess.php'
+        - 'src/Infrastructure/Reader/Magento1CsvReader.php'
