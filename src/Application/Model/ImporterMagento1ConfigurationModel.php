@@ -8,11 +8,11 @@ declare(strict_types=1);
 
 namespace Ergonode\ImporterMagento1\Application\Model;
 
+use Ergonode\ImporterMagento1\Application\Model\Type\AttributeMapModel;
 use Ergonode\ImporterMagento1\Application\Model\Type\LanguageMapModel;
+use Ergonode\ImporterMagento1\Application\Model\Type\StoreViewModel;
 use Ergonode\ImporterMagento1\Domain\Entity\Magento1CsvSource;
 use Symfony\Component\Validator\Constraints as Assert;
-use Ergonode\ImporterMagento1\Application\Model\Type\StoreViewModel;
-use Ergonode\ImporterMagento1\Application\Model\Type\AttributeMapModel;
 
 class ImporterMagento1ConfigurationModel
 {

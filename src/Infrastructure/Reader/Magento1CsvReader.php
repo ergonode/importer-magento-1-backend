@@ -8,10 +8,10 @@ declare(strict_types=1);
 
 namespace Ergonode\ImporterMagento1\Infrastructure\Reader;
 
-use Ergonode\Importer\Domain\Entity\Import;
-use Ergonode\Reader\Infrastructure\Exception\ReaderException;
-use Ergonode\ImporterMagento1\Infrastructure\Model\ProductModel;
 use Ergonode\Attribute\Domain\Entity\AbstractAttribute;
+use Ergonode\Importer\Domain\Entity\Import;
+use Ergonode\ImporterMagento1\Infrastructure\Model\ProductModel;
+use Ergonode\Reader\Infrastructure\Exception\ReaderException;
 
 class Magento1CsvReader
 {

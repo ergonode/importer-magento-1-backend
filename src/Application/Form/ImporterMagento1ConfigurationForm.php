@@ -8,15 +8,15 @@ declare(strict_types=1);
 
 namespace Ergonode\ImporterMagento1\Application\Form;
 
+use Ergonode\ImporterMagento1\Application\Form\Type\AttributeMapType;
+use Ergonode\ImporterMagento1\Application\Form\Type\StoreViewType;
 use Ergonode\ImporterMagento1\Application\Model\ImporterMagento1ConfigurationModel;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Ergonode\ImporterMagento1\Application\Form\Type\StoreViewType;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\CollectionType;
-use Ergonode\ImporterMagento1\Application\Form\Type\AttributeMapType;
 
 class ImporterMagento1ConfigurationForm extends AbstractType
 {
@@ -31,7 +31,7 @@ class ImporterMagento1ConfigurationForm extends AbstractType
                 TextType::class,
                 [
                     'label' => 'Name',
-                ]
+                ],
             )
             ->add(
                 'import',
@@ -46,7 +46,7 @@ class ImporterMagento1ConfigurationForm extends AbstractType
                         'Templates (Attribute set)' => 'templates',
                     ],
                     'multiple' => true,
-                ]
+                ],
             )
             ->add(
                 'host',
@@ -55,14 +55,14 @@ class ImporterMagento1ConfigurationForm extends AbstractType
                     'help' => 'Enter the address of the server where the product images are located',
                     'label' => 'Images host',
                     'required' => false,
-                ]
+                ],
             )
             ->add(
                 'mapping',
                 StoreViewType::class,
                 [
                     'label' => 'Store views',
-                ]
+                ],
             )
             ->add(
                 'attributes',
@@ -77,7 +77,7 @@ class ImporterMagento1ConfigurationForm extends AbstractType
                         'widget' => 'dictionary',
                     ],
                     'required' => false,
-                ]
+                ],
             );
     }
 

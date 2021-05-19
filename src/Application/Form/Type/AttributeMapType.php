@@ -8,13 +8,13 @@ declare(strict_types=1);
 
 namespace Ergonode\ImporterMagento1\Application\Form\Type;
 
-use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Ergonode\Attribute\Domain\Query\AttributeQueryInterface;
 use Ergonode\ImporterMagento1\Application\Model\Type\AttributeMapModel;
+use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class AttributeMapType extends AbstractType
 {
@@ -39,7 +39,7 @@ class AttributeMapType extends AbstractType
                 TextType::class,
                 [
                     'label' => 'Code',
-                ]
+                ],
             )
             ->add(
                 'attribute',
@@ -47,7 +47,7 @@ class AttributeMapType extends AbstractType
                 [
                     'label' => 'Attribute',
                     'choices' => array_flip($dictionary),
-                ]
+                ],
             );
     }
 

@@ -8,14 +8,14 @@ declare(strict_types=1);
 
 namespace Ergonode\ImporterMagento1\Domain\Builder;
 
-use Ergonode\Importer\Domain\Command\UpdateSourceCommandInterface;
-use Symfony\Component\Form\FormInterface;
-use Ergonode\ImporterMagento1\Application\Model\ImporterMagento1ConfigurationModel;
-use Ergonode\SharedKernel\Domain\Aggregate\SourceId;
-use Ergonode\ImporterMagento1\Domain\Entity\Magento1CsvSource;
 use Ergonode\Importer\Application\Provider\UpdateSourceCommandBuilderInterface;
+use Ergonode\Importer\Domain\Command\UpdateSourceCommandInterface;
+use Ergonode\ImporterMagento1\Application\Model\ImporterMagento1ConfigurationModel;
 use Ergonode\ImporterMagento1\Domain\Command\UpdateMagento1CsvSourceCommand;
+use Ergonode\ImporterMagento1\Domain\Entity\Magento1CsvSource;
 use Ergonode\SharedKernel\Domain\Aggregate\AttributeId;
+use Ergonode\SharedKernel\Domain\Aggregate\SourceId;
+use Symfony\Component\Form\FormInterface;
 
 class Magento1CsvUpdateSourceCommandBuilder implements UpdateSourceCommandBuilderInterface
 {
@@ -50,7 +50,7 @@ class Magento1CsvUpdateSourceCommandBuilder implements UpdateSourceCommandBuilde
             $host,
             $languages,
             $attributes,
-            $import
+            $import,
         );
     }
 }

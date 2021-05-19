@@ -8,10 +8,10 @@ declare(strict_types=1);
 
 namespace Ergonode\ImporterMagento1\Tests\Domain\Command;
 
-use Ergonode\ImporterMagento1\Domain\Command\UpdateMagento1CsvSourceCommand;
-use PHPUnit\Framework\TestCase;
-use Ergonode\SharedKernel\Domain\Aggregate\SourceId;
 use Ergonode\Core\Domain\ValueObject\Language;
+use Ergonode\ImporterMagento1\Domain\Command\UpdateMagento1CsvSourceCommand;
+use Ergonode\SharedKernel\Domain\Aggregate\SourceId;
+use PHPUnit\Framework\TestCase;
 
 class UpdateMagento1CsvSourceCommandTest extends TestCase
 {

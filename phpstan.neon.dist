@@ -1,0 +1,8 @@
+parameters:
+    level: 4
+    paths:
+        - src
+        - tests
+    excludes_analyse:
+            - 'src/Infrastructure/Processor/StartMagento1ImportProcess.php'
+            - 'src/Infrastructure/Reader/Magento1CsvReader.php'

@@ -9,10 +9,10 @@ declare(strict_types=1);
 
 namespace Ergonode\ImporterMagento1\Domain\Command;
 
-use Ergonode\Importer\Domain\Command\CreateSourceCommandInterface;
-use Ergonode\SharedKernel\Domain\Aggregate\SourceId;
 use Ergonode\Core\Domain\ValueObject\Language;
+use Ergonode\Importer\Domain\Command\CreateSourceCommandInterface;
 use Ergonode\SharedKernel\Domain\Aggregate\AttributeId;
+use Ergonode\SharedKernel\Domain\Aggregate\SourceId;
 use Webmozart\Assert\Assert;
 
 class CreateMagento1CsvSourceCommand implements CreateSourceCommandInterface
