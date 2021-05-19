@@ -34,7 +34,7 @@ class CreateMagento1CsvSourceCommandHandler
             $command->getLanguages(),
             $command->getAttributes(),
             $command->getImport(),
-            $command->getHost()
+            $command->getHost(),
         );
 
         $this->repository->save($source);

@@ -8,11 +8,11 @@ declare(strict_types=1);
 
 namespace Ergonode\ImporterMagento1\Infrastructure\Processor\Step;
 
-use Ergonode\ImporterMagento1\Infrastructure\Model\ProductModel;
-use Ergonode\ImporterMagento1\Domain\Entity\Magento1CsvSource;
+use Ergonode\Attribute\Domain\Entity\AbstractAttribute;
 use Ergonode\Attribute\Domain\Entity\Attribute\ImageAttribute;
 use Ergonode\Core\Domain\ValueObject\TranslatableString;
-use Ergonode\Attribute\Domain\Entity\AbstractAttribute;
+use Ergonode\ImporterMagento1\Domain\Entity\Magento1CsvSource;
+use Ergonode\ImporterMagento1\Infrastructure\Model\ProductModel;
 
 abstract class AbstractProductProcessor
 {

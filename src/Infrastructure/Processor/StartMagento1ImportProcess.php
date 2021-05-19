@@ -8,14 +8,14 @@ declare(strict_types=1);
 
 namespace Ergonode\ImporterMagento1\Infrastructure\Processor;
 
+use Ergonode\Attribute\Domain\Repository\AttributeRepositoryInterface;
 use Ergonode\Importer\Domain\Entity\Import;
 use Ergonode\Importer\Domain\Repository\SourceRepositoryInterface;
-use Ergonode\ImporterMagento1\Domain\Entity\Magento1CsvSource;
-use Webmozart\Assert\Assert;
 use Ergonode\Importer\Infrastructure\Processor\SourceImportProcessorInterface;
+use Ergonode\ImporterMagento1\Domain\Entity\Magento1CsvSource;
 use Ergonode\ImporterMagento1\Infrastructure\Reader\Magento1CsvReader;
 use Ergonode\Reader\Infrastructure\Exception\ReaderException;
-use Ergonode\Attribute\Domain\Repository\AttributeRepositoryInterface;
+use Webmozart\Assert\Assert;
 
 class StartMagento1ImportProcess implements SourceImportProcessorInterface
 {

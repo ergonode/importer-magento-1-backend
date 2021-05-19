@@ -8,14 +8,14 @@ declare(strict_types=1);
 
 namespace Ergonode\ImporterMagento1\Infrastructure\Processor\Step;
 
-use Ergonode\SharedKernel\Domain\Bus\CommandBusInterface;
+use Ergonode\Importer\Domain\Command\Import\ImportGroupingProductCommand;
 use Ergonode\Importer\Domain\Entity\Import;
+use Ergonode\Importer\Domain\Repository\ImportRepositoryInterface;
 use Ergonode\ImporterMagento1\Domain\Entity\Magento1CsvSource;
 use Ergonode\ImporterMagento1\Infrastructure\Model\ProductModel;
 use Ergonode\ImporterMagento1\Infrastructure\Processor\Magento1ProcessorStepInterface;
-use Ergonode\Importer\Domain\Command\Import\ImportGroupingProductCommand;
 use Ergonode\SharedKernel\Domain\Aggregate\ImportLineId;
-use Ergonode\Importer\Domain\Repository\ImportRepositoryInterface;
+use Ergonode\SharedKernel\Domain\Bus\CommandBusInterface;
 
 class Magento1BundleProductProcessor extends AbstractProductProcessor implements Magento1ProcessorStepInterface
 {
@@ -46,7 +46,7 @@ class Magento1BundleProductProcessor extends AbstractProductProcessor implements
                 $product->getTemplate(),
                 $categories,
                 [],
-                $attributes
+                $attributes,
             );
             $this->importRepository->addLine($id, $import->getId(), 'PRODUCT');
             $this->commandBus->dispatch($command, true);

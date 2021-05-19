@@ -8,15 +8,15 @@ declare(strict_types=1);
 
 namespace Ergonode\ImporterMagento1\Infrastructure\Processor\Step;
 
-use Ergonode\SharedKernel\Domain\Bus\CommandBusInterface;
+use Ergonode\Attribute\Domain\Entity\AbstractAttribute;
+use Ergonode\Importer\Domain\Command\Import\ImportVariableProductCommand;
 use Ergonode\Importer\Domain\Entity\Import;
+use Ergonode\Importer\Domain\Repository\ImportRepositoryInterface;
 use Ergonode\ImporterMagento1\Domain\Entity\Magento1CsvSource;
 use Ergonode\ImporterMagento1\Infrastructure\Model\ProductModel;
 use Ergonode\ImporterMagento1\Infrastructure\Processor\Magento1ProcessorStepInterface;
-use Ergonode\Importer\Domain\Command\Import\ImportVariableProductCommand;
-use Ergonode\Attribute\Domain\Entity\AbstractAttribute;
-use Ergonode\Importer\Domain\Repository\ImportRepositoryInterface;
 use Ergonode\SharedKernel\Domain\Aggregate\ImportLineId;
+use Ergonode\SharedKernel\Domain\Bus\CommandBusInterface;
 
 class Magento1ConfigurableProductProcessor extends AbstractProductProcessor implements Magento1ProcessorStepInterface
 {
@@ -54,7 +54,7 @@ class Magento1ConfigurableProductProcessor extends AbstractProductProcessor impl
                 $categories,
                 $bindings,
                 $variants,
-                $attributes
+                $attributes,
             );
             $this->commandBus->dispatch($command, true);
             $this->importRepository->addLine($id, $import->getId(), 'PRODUCT');
@@ -77,7 +77,7 @@ class Magento1ConfigurableProductProcessor extends AbstractProductProcessor impl
     /**
      * @return string[]
      */
-    private function getVariants(ProductModel $product): ?array
+    private function getVariants(ProductModel $product): array
     {
         $default = $product->getDefault();
         if ($default['variants']) {

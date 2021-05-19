@@ -8,15 +8,15 @@ declare(strict_types=1);
 
 namespace Ergonode\ImporterMagento1\Infrastructure\Processor\Step;
 
-use Ergonode\SharedKernel\Domain\Bus\CommandBusInterface;
-use Ergonode\Importer\Domain\Entity\Import;
-use Ergonode\ImporterMagento1\Domain\Entity\Magento1CsvSource;
-use Ergonode\ImporterMagento1\Infrastructure\Processor\Magento1ProcessorStepInterface;
-use Ergonode\ImporterMagento1\Infrastructure\Model\ProductModel;
-use Ergonode\Importer\Domain\Command\Import\ImportTemplateCommand;
 use Ergonode\Attribute\Domain\Entity\AbstractAttribute;
+use Ergonode\Importer\Domain\Command\Import\ImportTemplateCommand;
+use Ergonode\Importer\Domain\Entity\Import;
 use Ergonode\Importer\Domain\Repository\ImportRepositoryInterface;
+use Ergonode\ImporterMagento1\Domain\Entity\Magento1CsvSource;
+use Ergonode\ImporterMagento1\Infrastructure\Model\ProductModel;
+use Ergonode\ImporterMagento1\Infrastructure\Processor\Magento1ProcessorStepInterface;
 use Ergonode\SharedKernel\Domain\Aggregate\ImportLineId;
+use Ergonode\SharedKernel\Domain\Bus\CommandBusInterface;
 
 class Magento1TemplateProcessor implements Magento1ProcessorStepInterface
 {
@@ -52,7 +52,7 @@ class Magento1TemplateProcessor implements Magento1ProcessorStepInterface
             $command = new ImportTemplateCommand(
                 $id,
                 $import->getId(),
-                $template
+                $template,
             );
             $this->importRepository->addLine($id, $import->getId(), 'TEMPLATE');
             $this->commandBus->dispatch($command, true);

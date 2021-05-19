@@ -8,17 +8,17 @@ declare(strict_types=1);
 
 namespace Ergonode\ImporterMagento1\Infrastructure\Processor\Step;
 
+use Ergonode\Attribute\Domain\Entity\AbstractAttribute;
 use Ergonode\Core\Domain\ValueObject\TranslatableString;
-use Ergonode\SharedKernel\Domain\Bus\CommandBusInterface;
+use Ergonode\Importer\Domain\Command\Import\ImportCategoryCommand;
+use Ergonode\Importer\Domain\Entity\Import;
+use Ergonode\Importer\Domain\Repository\ImportRepositoryInterface;
 use Ergonode\ImporterMagento1\Domain\Entity\Magento1CsvSource;
 use Ergonode\ImporterMagento1\Infrastructure\Model\ProductModel;
 use Ergonode\ImporterMagento1\Infrastructure\Processor\Magento1ProcessorStepInterface;
-use Ergonode\Importer\Domain\Command\Import\ImportCategoryCommand;
-use Ergonode\Importer\Domain\Entity\Import;
-use Ramsey\Uuid\Uuid;
-use Ergonode\Attribute\Domain\Entity\AbstractAttribute;
-use Ergonode\Importer\Domain\Repository\ImportRepositoryInterface;
 use Ergonode\SharedKernel\Domain\Aggregate\ImportLineId;
+use Ergonode\SharedKernel\Domain\Bus\CommandBusInterface;
+use Ramsey\Uuid\Uuid;
 
 class Magento1CategoryProcessor implements Magento1ProcessorStepInterface
 {
@@ -69,7 +69,7 @@ class Magento1CategoryProcessor implements Magento1ProcessorStepInterface
                             $id,
                             $import->getId(),
                             $categoryCode,
-                            $name
+                            $name,
                         );
                         $this->importRepository->addLine($id, $import->getId(), 'CATEGORY');
                         $this->commandBus->dispatch($command, true);
