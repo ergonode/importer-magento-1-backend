@@ -31,6 +31,9 @@ class ImporterMagento1SourceFormFactory implements SourceFormFactoryInterface
         return Magento1CsvSource::TYPE === $type;
     }
 
+    /**
+     * @param Magento1CsvSource|null $source
+     */
     public function create(AbstractSource $source = null): FormInterface
     {
         $model = new ImporterMagento1ConfigurationModel($source);
