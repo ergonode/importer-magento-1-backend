@@ -16,6 +16,7 @@
     "malukenho/docheader": "^0.1.8",
     "phpstan/phpstan": "^0.12.85",
     "phpunit/phpunit": "^9.5",
+    "qossmic/deptrac-shim": "^0.13.0",
     "slevomat/coding-standard": "^7.0",
     "squizlabs/php_codesniffer": "^3.6"
   },
