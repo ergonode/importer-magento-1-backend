@@ -9,8 +9,8 @@
   },
   "require": {
     "php": "^7.4",
-    "ergonode/importer": "^1.0.0",
-    "ergonode/reader": "^1.0.0"
+    "ergonode/importer": "^1.1.0",
+    "ergonode/reader": "^1.1.0"
   },
   "require-dev": {
     "malukenho/docheader": "^0.1.8",

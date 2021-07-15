@@ -131,7 +131,7 @@ Feature: Magento 1 CSV module
         }
       }
       """
-    Then the response status code should be 201
+    Then the response status code should be 200
     And store response param "id" as "source_id"
 
   Scenario: Update Magento 1 CSV Source with null attribute
