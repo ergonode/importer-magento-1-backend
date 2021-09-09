@@ -3,3 +3,4 @@ composer.lock
 .phpcs-cache
 .phpunit.result.cache
 .deptrac.cache
+.idea
